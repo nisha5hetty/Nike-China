@@ -5,15 +5,15 @@
 
 **Nike Manufacturing Map**
 
-Source: nike.com
+Source: http://manufacturingmap.nikeinc.com/
 
-New York provides data of the all horses that have died or been injured at race tracks across the state. I filtered to include only the stats for Belmont Park and downloaded a spreadsheet covering the numbers for 2016 to 2020. I also filtered by trainers for the same years.
+Nike has data of all the contract factories that manufacture finished goods for the brand. I downloaded the map as an excel file and used Pandas to analyze the data.
 
 **Visualizations:**
 
 1. I wanted to create a table of where all the Nike factories are located around the world. Instead of doing a map, I created a searchable table, specifying what was being manufactured in each of the factories by country. I added a heat map. Though Vietnam is the leading manufacturer, China is the leading producer of footwear and equipment for Nike.
 
-3. I wanted to create a bar graph showing the number of migrant workers and locals workers in six Nike factories in China. I used Pandas and created a new column called 'Migrant Workers,' by multiplying '% Migrant Workers' and 'Total Workers' and dividing by 100.
+3. I wanted to create a bar graph showing the number of migrant workers and locals workers in six Nike factories in China. I used Pandas and created a new column called 'Migrant Workers,' by multiplying '% Migrant Workers' and 'Line Workers' and dividing by 100.
 
 **Summary of my analysis:**
 
