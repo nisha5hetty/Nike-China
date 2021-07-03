@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[209]:
+# In[1]:
 
 
 get_ipython().system('ls')
 
 
-# In[267]:
+# In[2]:
 
 
 import pandas as pd
@@ -19,7 +19,7 @@ import pandas as pd
 get_ipython().system(' pip install xlrd')
 
 
-# In[268]:
+# In[3]:
 
 
 #Read xls with xlrd
@@ -30,13 +30,13 @@ with pd.ExcelFile(xlrd_book) as xls:
     df = pd.read_excel(xls, "Worksheet")
 
 
-# In[269]:
+# In[4]:
 
 
 df.head()
 
 
-# In[270]:
+# In[5]:
 
 
 # Make the first row the new header
@@ -45,27 +45,27 @@ df = df[1:]
 df.columns = new_header
 
 
-# In[271]:
+# In[6]:
 
 
 df.head()
 
 
-# In[272]:
+# In[7]:
 
 
 # Rows and columns
 df.shape
 
 
-# In[274]:
+# In[8]:
 
 
 # Check to see missing values and what columns can be removed
 df.info
 
 
-# In[275]:
+# In[9]:
 
 
 # Remove columns that are not needed
@@ -73,7 +73,7 @@ df = df.drop(columns=['Nike, Inc. Brand(s)', 'Events', 'Region', 'Contact Name',
 df.head()
 
 
-# In[277]:
+# In[10]:
 
 
 # Correct spelling of Vietnam
@@ -83,20 +83,20 @@ df.loc[
 ] = 'Vietnam'
 
 
-# In[278]:
+# In[11]:
 
 
 df.head()
 
 
-# In[279]:
+# In[12]:
 
 
 # Check types
 df.dtypes
 
 
-# In[280]:
+# In[13]:
 
 
 # Change objects to floats
@@ -104,7 +104,7 @@ df['Total Workers'] = df['Total Workers'].astype(float)
 df['Line Workers'] = df['Line Workers'].astype(float)
 
 
-# In[281]:
+# In[14]:
 
 
 # Remove %
@@ -113,7 +113,7 @@ df['% Female Workers'] = df['% Female Workers'].str.replace('%', '')
 df['% Migrant Workers'] = df['% Migrant Workers'].str.replace('%', '')
 
 
-# In[282]:
+# In[15]:
 
 
 # Change objects to floats
@@ -121,88 +121,95 @@ df['% Female Workers'] = df['% Female Workers'].astype(float)
 df['% Migrant Workers'] = df['% Migrant Workers'].astype(float)
 
 
-# In[283]:
+# In[16]:
 
 
 # See which factories have no workers listed
 df[df['Total Workers'] == 0.0]
 
 
-# In[284]:
+# In[17]:
 
 
 # Remove those rows
 df = df.drop([173, 294])
 
 
-# In[311]:
+# In[18]:
 
 
 # Number of factories in each country
 df['Country/Region'].value_counts()
 
 
-# In[285]:
+# In[19]:
 
 
 # Number of workers in each country
 df.groupby(by='Country/Region')['Total Workers'].sum().sort_values(ascending=False)
 
 
-# In[287]:
+# In[20]:
 
 
-# Percent of workers in each Chinese factory
+# Percent of migrant workers in each Chinese factory
 df[df['Country/Region'] == 'China Mainland']['% Migrant Workers'].value_counts()
 
 
-# In[288]:
+# In[21]:
 
 
-# Create column listing number of migrant workers using % Migrant Workers and Total Workers
-df['Migrant Workers'] = ((df['% Migrant Workers'] * df['Total Workers']) / 100).round(2)
+# According to Nike, % Migrant workers are calculated based on total Line Workers
+# Create column listing number of migrant workers using % Migrant Workers and Line Workers
+df['Migrant Workers'] = ((df['% Migrant Workers'] * df['Line Workers']) / 100).round(2)
 
 
-# In[289]:
+# In[22]:
 
 
 # Number of migrant workers in China 
 df[df['Country/Region'] == 'China Mainland']['Migrant Workers'].value_counts()
 
 
-# In[305]:
+# In[23]:
 
 
 # Number of migrant workers in China greater than zero
 df[(df['Country/Region'] == 'China Mainland') & (df['Migrant Workers'] > 0.00)]
 
 
-# In[292]:
+# In[24]:
 
 
 # Find factory mentioned in WaPo article
 df[df['Factory Name'] == 'QINGDAO TAEKWANG SHOES CO., LTD']
 
 
-# In[293]:
+# In[25]:
 
 
 # Who are the suppliers in China?
 df[df['Country/Region'] == 'China Mainland']['Supplier Group'].value_counts()
 
 
-# In[307]:
+# In[26]:
 
 
 # Countries with most migrant workers
 df.groupby(by='Country/Region')['Migrant Workers'].sum().sort_values(ascending=False)
 
 
-# In[310]:
+# In[27]:
 
 
 # Number of factories in each country by what they manufacture 
 df.groupby(by='Product Type')['Country/Region'].value_counts()
+
+
+# In[ ]:
+
+
+
 
 
 # In[ ]:
